@@ -7,7 +7,7 @@ import time
 face_detector = dlib.get_frontal_face_detector()
 
 # Open an RTSP stream
-rtsp_url = "http://ip.sltv.xyz:8080/facetestfacetest/uXPaEbYy5B/3086"
+rtsp_url = "http://reb0rn.xyz/fons_69157137/07586648/289"
 cap = cv2.VideoCapture(rtsp_url)
 
 # Initialize a counter for the saved faces
@@ -51,7 +51,7 @@ while True:
             cropped_face = frame[y:y + h, x:x + w]
             if cropped_face.size != 0:
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                face_filename = f"./images/klan_{timestamp}.jpg"
+                face_filename = f"./images/raiuno_{timestamp}.jpg"
                 cv2.imwrite(face_filename, cropped_face)
                 print(f"Saved {face_filename}")
                 face_counter += 1

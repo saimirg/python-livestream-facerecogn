@@ -7,7 +7,7 @@ import time
 face_detector = dlib.get_frontal_face_detector()
 
 # Open an RTSP stream
-rtsp_url = "rtsp://88.198.24.22/topchannel"
+rtsp_url = "http://ip.sltv.xyz:8080/facetestfacetest/uXPaEbYy5B/3102"
 cap = cv2.VideoCapture(rtsp_url)
 
 # Initialize a counter for the saved faces

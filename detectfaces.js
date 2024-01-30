@@ -10,11 +10,13 @@ const { Client } = require('@elastic/elasticsearch');
 
 const client = new Client({
   cloud: {
-    id: "MyDeploymentFS:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkZGM4NDJiYTBhY2NiNDQ3ZGJlYWExZWJiZGM3Mzc4MDckZDdmODE1MzljYmIyNDg4NDgzMzEzMzIzMDFjYzBiYjI="
+    //id: "MyDeploymentFS:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkZGM4NDJiYTBhY2NiNDQ3ZGJlYWExZWJiZGM3Mzc4MDckZDdmODE1MzljYmIyNDg4NDgzMzEzMzIzMDFjYzBiYjI="
+    id: "eu-face-dev1:ZXVyb3BlLXdlc3QzLmdjcC5jbG91ZC5lcy5pbzo0NDMkNzJiZTdhYzI3NjhjNDllOGI5OWU3YmMzNWU0MGI0NmYkMDFlY2VkMzFmNjUzNGQ1MzhiNTc3MzFmZDllYmYzMGQ="
   },
   auth: {
     username: "elastic",
-    password: "Cnv3w9pwFlWncFQGuQhCiYK6"
+    //password: "Cnv3w9pwFlWncFQGuQhCiYK6"
+    password: "2Q03U6gk00C3vun4dj610MKA"
   }
 })
 
