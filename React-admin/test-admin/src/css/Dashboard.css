@@ -1,0 +1,50 @@
+.iframeStyle {
+    background: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px 0 rgba(70, 76, 79, 0.2);
+    width: 100%; 
+    max-width: 640px; 
+    height: auto; 
+    aspect-ratio: 4 / 3; 
+    max-height: 480px;
+}
+.thirdChart{
+    max-width: 300px;
+    margin-right: 20px;
+}
+
+.firstChart {
+    margin-right: 20px;
+}
+.table{
+    background: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px 0 rgba(70, 76, 79, 0.2);
+    width: 100%;  
+    height: auto; 
+    aspect-ratio: 4 / 3; 
+    max-height: 480px;
+}
+
+
+@media (max-width: 768px) {
+    .firstChart {
+        margin-right: 0;
+        margin-bottom: 20px; 
+    }
+
+    .iframeStyle {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .iframeStyle,
+    .firstChart {
+        margin-right: 0;
+        margin-bottom: 10px; 
+    }
+}

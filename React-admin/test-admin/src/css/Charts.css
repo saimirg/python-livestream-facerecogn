@@ -1,0 +1,43 @@
+.chartContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* .namechart {
+    width: 700px;
+    height: 400px;
+    margin-right: 20px;
+} */
+.chart{
+    width: 700px;
+    height: 400px;
+    margin-right: 20px;
+}
+
+/* .datechart{
+    width: 700px;
+    height: 400px;
+}
+
+.datechart iframe{
+    background-color: rgba(215, 233, 243, 0.247) !important;
+} */
+
+.chartTv{
+    width: 700px;
+    height: 400px;
+}
+
+
+/* Smaller screens */
+@media (max-width: 319px) {
+    .chart {
+        width: 100%; 
+        flex-basis: 100%; 
+        margin-right: 0;
+    }
+    .chartTv {
+        width: 100%; 
+        flex-basis: 100%; 
+    }
+}
