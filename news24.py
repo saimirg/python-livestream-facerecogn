@@ -51,7 +51,7 @@ while True:
             cropped_face = frame[y:y + h, x:x + w]
             if cropped_face.size != 0:
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                face_filename = f"./images/news24_{timestamp}.jpg"
+                face_filename = f"./images/news24_{timestamp}_{face_counter}.jpg"
                 cv2.imwrite(face_filename, cropped_face)
                 print(f"Saved {face_filename}")
                 face_counter += 1
