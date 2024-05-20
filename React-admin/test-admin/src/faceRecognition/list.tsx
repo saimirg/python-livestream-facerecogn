@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, useRecordContext, FunctionField, DeleteButton, ShowButton, TextInput, Filter } from "react-admin";
+import { List, Datagrid, TextField, useRecordContext, FunctionField, DeleteButton, ShowButton, TextInput, Filter, Pagination,DateField} from "react-admin";
 import { render } from "react-dom";
 import MyUrlField from "./MyUrlField";
 
@@ -13,6 +13,8 @@ const RenderIcon = () => {
     };
     return <img src={imageUrl} alt={record.image} style={imageStyle} />;
 };
+
+// const PostPagination = () => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} />;
 
 const ListFilters = (props: any) => (
     <Filter {...props}>
@@ -42,34 +44,34 @@ const MyResourceList = () => {
     const handleRowClick = (id: any, basePath: any, record: any) => {
         const name = record.name ? encodeURIComponent(record.name) : 'NoName';
         const date = record.date ? encodeURIComponent(record.date) : 'NoDate';
-        const month = record.date ? encodeURIComponent(record.month) : 'NoMonth';
-        const year = record.date ? encodeURIComponent(record.year) : 'NoYear';
-
-        // console.log(typeof(record.year))
-        return `/charts/${id}/${name}/${date}/${month}/${year}`;
+        return `/charts/${id}/${name}/${date}`;
     };
+
     return (
-        <List filters={<ListFilters />}
+        <List filters={<ListFilters />} perPage={10} sort={{field: 'timestamp2', order:'DESC'}} //pagination={<PostPagination />}
         >
             <Datagrid rowClick={handleRowClick}>
                 <FunctionField label="Image" render={() => <RenderIcon />} />
                 {/* <TextField source="filename" /> */}
                 <TextField source="tvChannel" />
+                <TextField source="name" />
                 {/* <FunctionField
                     label="Name"
                     render={(record: any) => (
                         record.firstsubject.subject
                     )}
                 /> */}
-                <TextField source="name" />
                 {/* <TextField source="timestamp"/> */}
-                <TextField source="timestamp2"/>
-                <TextField source="date" />
+                {/* <TextField source="timestamp2"/> */}
+                {/* <TextField source="date" /> */}
                 {/* <TextField source="time" /> */}
-                <TextField source="month" />
-                <TextField source="year" />
-
-
+                {/* <TextField source="month" /> */}
+                {/* <TextField source="year" /> */}
+                <DateField label='Timestamp' source="timestamp2" showTime />
+                <FunctionField
+                    label="Similarity"
+                    render={(record: any) => `${(record.firstsubject.similarity*100).toFixed(2)}%`}
+                />
                 {/* <TextField source="timestamp" /> */}
                 {/* <FunctionField
                     label="Age"
@@ -89,9 +91,9 @@ const MyResourceList = () => {
                         </div>
                     )}
                 /> */}
-                <ShowButton label="See All" />
+                <ShowButton label="See Details" />
                 <MyUrlField />
-                <DeleteButton />
+                {/* <DeleteButton /> */}
             </Datagrid>
         </List>
     );

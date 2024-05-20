@@ -17,97 +17,54 @@ export default (
     if (!realmApp.currentUser) {
       throw new Error("User needs to be logged in to fetch data.");
     }
-    // console.log(resource)
+  
     const collection = realmApp.currentUser
       .mongoClient(mongoClient_Name)
       .db(DB_NAME)
       .collection(resource);
-
+  
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const skip = (page - 1) * perPage;
     const sortOrder = order === "ASC" ? 1 : -1;
     const filterKeys = Object.keys(params.filter);
 
-    const query = params.filter || {}; // Use an empty filter if none provided
-    function filterWordsStartingWith(arr: any, startingWith: any) {
-      return arr.filter((word: any) => word.startsWith(startingWith));
-    }
-    let dateArrayWordsStartingWithName: any[] = [];
-
-    // Fetching data without pagination
-    const documents = await collection.find(query);
-
-    // Sort the array of documents
-    documents.sort((a: any, b: any) => {
-      if (a[field] < b[field]) {
-        return sortOrder;
+    const query = filterKeys.reduce((acc:any, key) => {
+      if (key.startsWith("name_")) {
+        acc[key.slice(5)] = { $regex: `^${params.filter[key]}`, $options: "i" };
+      } else {
+        acc[key] = params.filter[key];
       }
-      if (a[field] > b[field]) {
-        return -sortOrder;
-      }
-      return 0;
-    });
-
-    //Live filtering
-    const filteredWordsStartingWithName = filterWordsStartingWith(
-      filterKeys,
-      "name"
-    );
-    filteredWordsStartingWithName.map((name: any) =>
-      dateArrayWordsStartingWithName.push(name.slice(5))
-    );
-    const firstFilter = dateArrayWordsStartingWithName[0];
-    const firstFilter1 = dateArrayWordsStartingWithName[1];
-
-    const nameFilter1 = {
-      [firstFilter]: {
-        $regex: `^${params.filter[`name_${firstFilter}`]}`,
-        $options: "i",
-      },
-    };
-
-    const nameFilter2 = {
-      [firstFilter1]: {
-        $regex: `^${params.filter[`name_${firstFilter1}`]}`,
-        $options: "i",
-      },
-    };
-
-    const filterPipeline = nameFilter1 ? [{ $match: nameFilter1 }] : [];
-    const filterPipeline1 = nameFilter2 ? [{ $match: nameFilter2 }] : [];
-
-    const pipeline: any = [{ $count: "total" }];
-
-    const [result] = await collection.aggregate(pipeline);
-
-    const dataPipeline: any = [
-      ...(params.filter[`name_${firstFilter}`] ? filterPipeline : []),
-      ...(params.filter[`name_${firstFilter1}`] ? filterPipeline1 : []),
+      return acc;
+    }, {});
+  
+    const pipeline = [
+      { $match: query },
       { $sort: { [field]: sortOrder, _id: 1 } },
       { $skip: skip },
       { $limit: perPage },
     ];
-    const documentss = await collection.aggregate(dataPipeline);
+  
+    const countPipeline = [
+      { $match: query },
+      { $count: "total" }
+    ];
 
-    const totalData = result ? result.total : 0;
+    // Execute the pipelines
+    const [countResult] = await collection.aggregate(countPipeline);
+    const totalData = countResult ? countResult.total : 0;
+    const documents = await collection.aggregate(pipeline);
+  
+    const totalPages = Math.ceil(totalData / perPage);
+  
     return {
-      data: documentss.map((doc: any) => ({ ...doc, id: doc._id.toString() })),
+      data: documents.map((doc:any) => ({ ...doc, id: doc._id.toString() })),
       total: totalData,
+      totalPages: totalPages,
+      currentPage: page
     };
-    // Apply pagination
-    // const paginatedDocuments = documents.slice(skip, skip + perPage);
-
-    // const total = documents.length;
-
-    // return {
-    //   data: paginatedDocuments.map((doc) => ({ ...doc, id: doc._id })),
-    //   total: total,
-    // };
   },
-
-
-
+  
   getOne: (resource, params) => {
     // Ensure the user is logged in
     if (!realmApp.currentUser) {

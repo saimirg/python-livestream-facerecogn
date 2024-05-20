@@ -1,90 +1,3 @@
-// import { useRecordContext } from "react-admin";
-// import { Link } from "@mui/material";
-// import LaunchIcon from "@mui/icons-material/Launch";
-
-// const MyUrlField = ({ source }: { source: string }) => {
-//     const record = useRecordContext();
-//     return record ? (
-//         <Link href={record[source]} sx={{ textDecoration: "none" }}>
-//             {record[source]}
-//             <LaunchIcon sx={{ fontSize: 15, ml: 1 }} />
-//         </Link>
-//     ) : null;
-// };
-
-// export default MyUrlField;
-
-// import * as React from 'react';
-// import Button from '@mui/material/Button';
-// import { styled } from '@mui/material/styles';
-// import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogActions from '@mui/material/DialogActions';
-// import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
-// import Typography from '@mui/material/Typography';
-
-// const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-//   '& .MuiDialogContent-root': {
-//     padding: theme.spacing(2),
-//   },
-//   '& .MuiDialogActions-root': {
-//     padding: theme.spacing(1),
-//   },
-// }));
-
-// const MyUrlField = () => {
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleClickOpen = (event:any) => {
-//     event.stopPropagation(); // Prevent the click from affecting the row
-//     setOpen(true);
-//   };
-
-//   const handleClose = (event:any) => {
-//     event.stopPropagation(); // Also stop propagation here to handle edge cases
-//     setOpen(false);
-//   };
-
-//   return (
-//     <React.Fragment>
-//       <Button variant="outlined" onClick={handleClickOpen}>
-//         Watch Video
-//       </Button>
-//       <BootstrapDialog
-//         onClose={handleClose}
-//         aria-labelledby="customized-dialog-title"
-//         open={open}
-//       >
-//         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-//           Video
-//         </DialogTitle>
-//         <IconButton
-//           aria-label="close"
-//           onClick={handleClose}
-//           sx={{
-//             position: 'absolute',
-//             right: 8,
-//             top: 8,
-//             color: (theme) => theme.palette.grey[500],
-//           }}
-//         >
-//           <CloseIcon />
-//         </IconButton>
-//         <DialogContent dividers>
-//           <Typography gutterBottom>
-//             Cras mattis consectetur purus sit amet fermentum...
-//           </Typography>
-//         </DialogContent>
-//       </BootstrapDialog>
-//     </React.Fragment>
-//   );
-// }
-
-// export default MyUrlField;
-
-
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -95,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import ReactPlayer from 'react-player';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -105,7 +19,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const MyUrlField = ({ videoId = 'dQw4w9WgXcQ' }) => { 
+const MyUrlField = ({ videoId = 'http://176.9.125.94:8081/yWbXvr1S/knst/playlist.m3u8' }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = (event:any) => {
@@ -122,8 +36,6 @@ const MyUrlField = ({ videoId = 'dQw4w9WgXcQ' }) => {
     event.stopPropagation(); 
   };
 
-  const iframeSrc = `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=0`; // Autoplay and mute parameters
-
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -136,7 +48,7 @@ const MyUrlField = ({ videoId = 'dQw4w9WgXcQ' }) => {
         onClick={handleDialogClick}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Video
+          Live Stream Video
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -150,16 +62,14 @@ const MyUrlField = ({ videoId = 'dQw4w9WgXcQ' }) => {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers> 
-          <iframe
-            width="560"
-            height="315"
-            src={iframeSrc}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+        <DialogContent dividers>
+          <ReactPlayer
+            url={videoId}
+            playing
+            width="100%"
+            height="100%"
+            controls={true}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -172,4 +82,3 @@ const MyUrlField = ({ videoId = 'dQw4w9WgXcQ' }) => {
 }
 
 export default MyUrlField;
-
