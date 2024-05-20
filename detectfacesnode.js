@@ -72,7 +72,7 @@ async function handleRecognitionResponse(data, filePath) {
   
   console.log("similiarity = ",similarity);
 
-  if (similarity && similarity > 0.9) {
+  if (similarity && similarity > 0.98) {
     try {
       const timestamp = new Date().toLocaleString(); // toISOString()
       const timestamp2 = new Date()
